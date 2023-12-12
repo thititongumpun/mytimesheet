@@ -44,7 +44,7 @@ export default function Login() {
     // })
 
     // console.log(await res.json());
-    const res = await supabase.auth.signInWithPassword({
+    await supabase.auth.signInWithPassword({
       email,
       password,
     });
