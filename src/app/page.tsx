@@ -3,6 +3,8 @@ import { cookies } from "next/headers";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { Database } from "@/lib/database.types";
+import CreateForm from "@/components/CreateForm";
+import Link from "next/link";
 
 export default async function Home() {
   const cookieStore = cookies();
@@ -15,6 +17,7 @@ export default async function Home() {
     .order("date_memo", { ascending: true });
   return (
     <div className="container mx-auto py-10">
+      <CreateForm />
       <DataTable
         columns={columns}
         data={data as Database["public"]["Tables"]["timesheets"]["Row"][]}

@@ -5,16 +5,21 @@ import {
   User,
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import type { Database } from "@/lib/database.types";
 import Image from "next/image";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Login() {
+  const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState<User | undefined>();
-  const router = useRouter();
   const supabase = createClientComponentClient<Database>();
+
+  if (user) {
+    redirect("/");
+  }
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((_, session) => {
@@ -23,13 +28,21 @@ export default function Login() {
   }, [supabase.auth]);
 
   const handleSignIn = async () => {
-    await supabase.auth.signInWithPassword({
+    const res = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    router.refresh();
-    router.push('/')
+    toast({
+      title: "Sign in successful",
+    });
+
+    if (res.error) {
+      toast({
+        title: res.error.message,
+        variant: "destructive",
+      });
+    }
   };
 
   return (

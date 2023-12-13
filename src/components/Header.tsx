@@ -1,20 +1,25 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import React from "react";
 import NovuHeader from "./NovuHeader";
 import SignOut from "./SignOut";
 
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import {
+  User,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/lib/database.types";
-import { cookies } from "next/headers";
 
-export default async function Header({}) {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient<Database>({
-    cookies: () => cookieStore,
-  });
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export default function Header() {
+  const [user, setUser] = useState<User | undefined>();
+  const supabase = createClientComponentClient<Database>();
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((_, session) => {
+      setUser(session?.user);
+    });
+  }, [supabase.auth]);
   return (
     <nav className="bg-white border-b">
       <div className="flex items-center space-x-8 py-3 px-4 max-w-screen-xl mx-auto md:px-8">
