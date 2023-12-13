@@ -1,12 +1,20 @@
 import Link from "next/link";
 import React from "react";
 import NovuHeader from "./NovuHeader";
+import SignOut from "./SignOut";
 
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/lib/database.types";
+import { cookies } from "next/headers";
 
 export default async function Header({}) {
-  const supabase = createClientComponentClient<Database>();
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient<Database>({
+    cookies: () => cookieStore,
+  });
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   return (
     <nav className="bg-white border-b">
       <div className="flex items-center space-x-8 py-3 px-4 max-w-screen-xl mx-auto md:px-8">
@@ -21,8 +29,11 @@ export default async function Header({}) {
         </div>
         <div className="flex-1 flex items-center justify-between">
           <div className="flex-1 flex items-center justify-end space-x-2 sm:space-x-6">
+            {user && (
+              <span className="text-gray-500 font-md">{user.email}</span>
+            )}
+            {!!user && <SignOut />}
             <NovuHeader />
-            {/* <UserButton afterSignOutUrl="/" /> */}
           </div>
         </div>
       </div>
