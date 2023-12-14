@@ -1,5 +1,7 @@
+"use client";
+
 import React from "react";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -9,11 +11,26 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import { Copy } from "lucide-react";
+import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import { Database } from "@/lib/database.types";
+import { tt } from "@/app/actions";
 // import { Input } from "./ui/input"
 
 export default function CreateForm() {
+  // const cookieStore = cookies();
+  // const supabase = createServerActionClient<Database>({
+  //   cookies: () => cookieStore,
+  // });
+
+  // const createTimesheet = async () => {
+  //   'use server'
+  //   const res = await supabase.from('projects').select('*')
+  //   console.log(res.data);
+  // }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -37,6 +54,9 @@ export default function CreateForm() {
               readOnly
             />
           </div> */}
+          <form action={tt}>
+            <button>haha</button>
+          </form>
           <Button type="submit" size="sm" className="px-3">
             <span className="sr-only">Copy</span>
             <Copy className="h-4 w-4" />
