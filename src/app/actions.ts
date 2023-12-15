@@ -6,17 +6,23 @@ import { Database } from '../lib/database.types'
 
 import * as z from "zod";
 import { FormSchema } from '@/lib/FormSchema';
+import { format, parseISO } from 'date-fns';
 type FormInputs = z.infer<typeof FormSchema>
 
 export async function createTimesheet(data: FormInputs) {
   const client = createServerActionClient<Database>({ cookies });
-  // const res = await client.from('timesheets').insert({
-  //   user_id: '7d900916-f097-42d1-a54a-6494464f3a4f',
-  //   project_id: 11,
-  //   date_memo: new Date().toString(),
-  //   is_complete: false,
-  //   description: 'test',
-  // }).select()
-  const {data: {user}} = await client.auth.getUser();
-  console.log(data)
+
+  const { data: { user } } = await client.auth.getUser();
+  const today = new Date();
+  const currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  const date_memo = format(data.date_memo, `yyyy-MM-dd ${currentTime}`)
+
+  const res = await client.from('timesheets').insert({
+    user_id: user?.id as string,
+    project_id: Number(data.project_id),
+    date_memo: date_memo,
+    is_complete: data.is_complete,
+    description: data.description,
+  }).select()
+  return res.data;
 }

@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 import {
   Form,
@@ -38,13 +38,14 @@ import {
 import { FormSchema } from "@/lib/FormSchema";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
-import { Calendar } from "@/components/ui/calendar"
+import { Calendar } from "@/components/ui/calendar";
 import { createTimesheet } from "@/app/actions";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/lib/database.types";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns"
+import { format } from "date-fns";
+import TipTab from "./TipTab";
 
 export default function CreateForm() {
   const supabase = createClientComponentClient<Database>();
@@ -95,7 +96,7 @@ export default function CreateForm() {
       <DialogTrigger asChild>
         <Button variant="outline">Create</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>Create Timesheet</DialogTitle>
         </DialogHeader>
@@ -181,10 +182,8 @@ export default function CreateForm() {
                   control={form.control}
                   name="is_complete"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                      <div className="space-y-0.5">
-                        <FormLabel className="text-base">Complete</FormLabel>
-                      </div>
+                    <FormItem>
+                      <FormLabel className="text-base">Complete</FormLabel>
                       <FormControl>
                         <Switch
                           checked={field.value}
@@ -194,6 +193,22 @@ export default function CreateForm() {
                     </FormItem>
                   )}
                 />
+                <div className="max-w-sm md:max-w-2xl">
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Description</FormLabel>
+                        <TipTab
+                          description={field.value}
+                          onChange={field.onChange}
+                        />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
               <Button type="submit" className="w-full">
                 Submit
