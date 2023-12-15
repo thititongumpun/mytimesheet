@@ -16,8 +16,10 @@ export default async function Home() {
     .order("date_memo", { ascending: true });
 
   return (
-    <div className="container mx-auto py-10">
-      <CreateForm />
+    <div className="container mx-auto py-2">
+      <div className="flex justify-end mb-2">
+        <CreateForm />
+      </div>
       <DataTable
         columns={columns}
         data={data as Database["public"]["Tables"]["timesheets"]["Row"][]}

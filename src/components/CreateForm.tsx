@@ -94,7 +94,7 @@ export default function CreateForm() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Create</Button>
+        <Button variant="default">Create</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
@@ -182,7 +182,7 @@ export default function CreateForm() {
                   control={form.control}
                   name="is_complete"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                       <FormLabel className="text-base">Complete</FormLabel>
                       <FormControl>
                         <Switch
