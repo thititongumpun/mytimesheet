@@ -5,6 +5,7 @@ import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { Database } from "@/lib/database.types";
 import CreateForm from "@/components/CreateForm";
+import TipTab from "@/components/TipTab";
 
 export default async function Home() {
   const cookieStore = cookies();
@@ -23,6 +24,7 @@ export default async function Home() {
         columns={columns}
         data={data as Database["public"]["Tables"]["timesheets"]["Row"][]}
       />
+      <TipTab description="helloworld" />
     </div>
   );
 }
