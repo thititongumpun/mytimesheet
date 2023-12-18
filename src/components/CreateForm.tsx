@@ -11,9 +11,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import Datepicker from "react-tailwindcss-datepicker";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import {
   Form,
@@ -91,6 +92,16 @@ export default function CreateForm() {
     await createTimesheet(data);
   }
 
+  const [value, setValue] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+  });
+
+  const handleValueChange = (newValue: any) => {
+    console.log("newValue:", newValue);
+    setValue(newValue);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -107,6 +118,13 @@ export default function CreateForm() {
               className="w-full space-y-6"
             >
               <div className="space-y-4">
+                <Datepicker
+                  showShortcuts={true}
+                  value={value}
+                  onChange={handleValueChange}
+                  useRange={false}
+                  asSingle={true}
+                />
                 <FormField
                   control={form.control}
                   name="date_memo"
