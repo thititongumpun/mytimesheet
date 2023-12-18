@@ -11,7 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import Datepicker from "react-tailwindcss-datepicker";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -118,13 +117,6 @@ export default function CreateForm() {
               className="w-full space-y-6"
             >
               <div className="space-y-4">
-                <Datepicker
-                  showShortcuts={true}
-                  value={value}
-                  onChange={handleValueChange}
-                  useRange={false}
-                  asSingle={true}
-                />
                 <FormField
                   control={form.control}
                   name="date_memo"
@@ -137,7 +129,7 @@ export default function CreateForm() {
                             <Button
                               variant={"outline"}
                               className={cn(
-                                "w-[240px] pl-3 text-left font-normal",
+                                "w-full pl-3 text-left font-normal",
                                 !field.value && "text-muted-foreground"
                               )}
                             >
@@ -155,10 +147,6 @@ export default function CreateForm() {
                             mode="single"
                             selected={field.value}
                             onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
                           />
                         </PopoverContent>
                       </Popover>
