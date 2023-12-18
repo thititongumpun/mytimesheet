@@ -1,6 +1,6 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { DataTable } from "./data-table";
+import { DataTable } from "@/components/data-table";
 import { columns } from "./columns";
 import { Database } from "@/lib/database.types";
 import CreateForm from "@/components/CreateForm";
