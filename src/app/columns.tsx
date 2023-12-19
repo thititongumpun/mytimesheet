@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { format } from "date-fns";
 import { th } from "date-fns/locale";
+import UpdateTimeSheet from "@/components/UpdateTimeSheet";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
@@ -88,6 +89,10 @@ export const columns: ColumnDef<
               Copy payment ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
+            <UpdateTimeSheet
+              id={timesheet.id}
+              is_complete={timesheet.is_complete}
+            />
             <DropdownMenuItem>View customer</DropdownMenuItem>
             <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>

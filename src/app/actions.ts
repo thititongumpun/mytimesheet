@@ -8,9 +8,8 @@ import * as z from "zod";
 import { FormSchema } from '@/lib/FormSchema';
 import { format } from 'date-fns';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
-type FormInputs = z.infer<typeof FormSchema>
+export type FormInputs = z.infer<typeof FormSchema>
 
 export async function createTimesheet(data: FormInputs) {
   const client = createServerActionClient<Database>({ cookies });
@@ -29,7 +28,6 @@ export async function createTimesheet(data: FormInputs) {
   }).select()
 
   revalidatePath('/')
-  // redirect(`/`)
 
   return res.data;
 }

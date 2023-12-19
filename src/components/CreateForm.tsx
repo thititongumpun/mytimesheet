@@ -50,6 +50,7 @@ import SubmitBtn from "./SubmitBtn";
 
 export default function CreateForm() {
   const supabase = createClientComponentClient<Database>();
+  const [open, setOpen] = useState(false);
   const [projects, setProjects] =
     useState<Database["public"]["Tables"]["projects"]["Row"][]>();
 
@@ -91,10 +92,13 @@ export default function CreateForm() {
     });
 
     await createTimesheet(data);
+
+    const wait = () => new Promise((resolve) => setTimeout(resolve, 500));
+    wait().then(() => setOpen(false));
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default">Create</Button>
       </DialogTrigger>
