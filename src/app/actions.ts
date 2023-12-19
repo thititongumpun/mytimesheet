@@ -6,7 +6,10 @@ import { Database } from '../lib/database.types'
 
 import * as z from "zod";
 import { FormSchema } from '@/lib/FormSchema';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+
 type FormInputs = z.infer<typeof FormSchema>
 
 export async function createTimesheet(data: FormInputs) {
@@ -24,5 +27,9 @@ export async function createTimesheet(data: FormInputs) {
     is_complete: data.is_complete,
     description: data.description,
   }).select()
+
+  revalidatePath('/')
+  // redirect(`/`)
+
   return res.data;
 }

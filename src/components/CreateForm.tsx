@@ -46,6 +46,7 @@ import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import TipTab from "./TipTab";
+import SubmitBtn from "./SubmitBtn";
 
 export default function CreateForm() {
   const supabase = createClientComponentClient<Database>();
@@ -75,6 +76,7 @@ export default function CreateForm() {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       is_complete: false,
+      date_memo: new Date(),
     },
   });
 
@@ -90,16 +92,6 @@ export default function CreateForm() {
 
     await createTimesheet(data);
   }
-
-  const [value, setValue] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
-  });
-
-  const handleValueChange = (newValue: any) => {
-    console.log("newValue:", newValue);
-    setValue(newValue);
-  };
 
   return (
     <Dialog>
@@ -217,9 +209,7 @@ export default function CreateForm() {
                   />
                 </div>
               </div>
-              <Button type="submit" className="w-full">
-                Submit
-              </Button>
+              <SubmitBtn />
             </form>
           </Form>
         </div>

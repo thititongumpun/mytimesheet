@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { format } from "date-fns";
 import { th } from "date-fns/locale";
-import { formatWithOptions } from "util";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
@@ -23,7 +22,17 @@ export const columns: ColumnDef<
 >[] = [
   {
     accessorKey: "date_memo",
-    header: "Date Memo",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Dete Memo
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       return (
         <div className="w-[80px]">
