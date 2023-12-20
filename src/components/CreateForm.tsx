@@ -82,16 +82,18 @@ export default function CreateForm() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    const res = await createTimesheet(data);
+    if (res.error) {
+      toast({
+        title: "Something went wrong",
+        description: res.error.message,
+      });
+    }
 
-    await createTimesheet(data);
+    toast({
+      title: "Successfully",
+      description: `Create time sheet success`,
+    });
 
     const wait = () => new Promise((resolve) => setTimeout(resolve, 500));
     wait().then(() => setOpen(false));

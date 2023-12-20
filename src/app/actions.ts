@@ -29,5 +29,5 @@ export async function createTimesheet(data: FormInputs) {
 
   revalidatePath('/')
 
-  return res.data;
+  return res;
 }
