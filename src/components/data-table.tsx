@@ -5,13 +5,16 @@ import {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
+  VisibilityState,
   flexRender,
   getCoreRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table";
+} from "@tanstack/react-table"
 
 import {
   Table,
@@ -23,7 +26,9 @@ import {
 } from "./ui/table";
 
 import { Button } from "@/components/ui/button";
-
+import { Label } from "./ui/label";
+import { Checkbox } from "./ui/checkbox";
+import { CheckedState } from "@radix-ui/react-checkbox";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -34,29 +39,49 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnVisibility, setColumnVisibility] =
+    useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    enableRowSelection: true,
     onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
+    getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
     state: {
       sorting,
+      columnVisibility,
       columnFilters,
     },
     initialState: {
       pagination: {
-        pageSize: 8,
+        pageSize: 6,
       },
     },
   });
 
   return (
     <div className="w-full">
+      <div className="flex items-center py-4">
+        <Checkbox
+          defaultChecked={true}
+          checked={
+            (table.getColumn("is_complete")?.getFilterValue() as boolean) ??
+            false
+          }
+          onCheckedChange={(event: CheckedState) =>
+            table.getColumn("is_complete")?.setFilterValue(event)
+          }
+        />
+        <Label className="ml-2">Show only completed</Label>
+      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
