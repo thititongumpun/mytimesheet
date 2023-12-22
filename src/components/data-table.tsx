@@ -71,7 +71,7 @@ export function DataTable<TData, TValue>({
     <div className="w-full">
       <div className="flex items-center py-4">
         <Checkbox
-          defaultChecked={true}
+          defaultChecked={false}
           checked={
             (table.getColumn("is_complete")?.getFilterValue() as boolean) ??
             false

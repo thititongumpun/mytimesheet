@@ -2,7 +2,8 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import type { Database } from "../lib/database.types";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal, Check, X } from "lucide-react";
+// import { CheckCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -36,7 +37,7 @@ export const columns: ColumnDef<
     },
     cell: ({ row }) => {
       return (
-        <div className="w-[80px]">
+        <div className="w-[80px] flex justify-center items-center">
           {format(new Date(row.original.date_memo), "dd-MM-yyyy", {
             locale: th,
           })}
@@ -63,6 +64,13 @@ export const columns: ColumnDef<
           Complete
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <div className="w-[80px] flex justify-center items-center">
+          {row.original.is_complete ? <Check /> : <X />}
+        </div>
       );
     },
   },
