@@ -18,7 +18,7 @@ export default function NovuHeader() {
   return (
     <NovuProvider
       subscriberId={`c761c317-2037-4315-8a1a-829523a98403`}
-      applicationIdentifier={"v0bwdWkyNxvA"}
+      applicationIdentifier={"al1T0T69onU6"}
     >
       <PopoverNotificationCenter
         onNotificationClick={onNotificationClick}
