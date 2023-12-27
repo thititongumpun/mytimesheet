@@ -1,0 +1,20 @@
+name: Send notification
+
+on:
+  schedule:
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call endpoint to notification
+        shell: bash
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+        run: |
+          curl --location 'https://novu-thititongumpun.koyeb.app/todo' \
+          --header "x-api-key: $X_API_KEY" \
+          --header 'Accept: application/json' \
+          --header 'Content-Type: application/json'
