@@ -4,6 +4,7 @@ import { DataTable } from "@/components/data-table";
 import { columns } from "./columns";
 import { Database } from "@/lib/database.types";
 import CreateForm from "@/components/CreateForm";
+import CreateDrawer from "@/components/CreateDrawer";
 
 export default async function Home() {
   const cookieStore = cookies();
@@ -19,6 +20,7 @@ export default async function Home() {
     <div className="container mx-auto py-2">
       <div className="flex justify-end mb-2">
         <CreateForm />
+        <CreateDrawer />
       </div>
       <DataTable
         columns={columns}
