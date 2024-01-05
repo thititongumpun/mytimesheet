@@ -11,6 +11,8 @@ export async function middleware(req: NextRequest) {
   const expirationDate = session.data.session?.expires_at
   const currentDate = new Date();
   const tokenExpirationDate = new Date(expirationDate as number * 1000);
+  console.log('curr', currentDate)
+  console.log('exp', tokenExpirationDate)
   if (currentDate > tokenExpirationDate) {
     supabase.auth.refreshSession({ refresh_token: session.data.session?.refresh_token as string })
   }

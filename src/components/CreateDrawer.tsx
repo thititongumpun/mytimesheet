@@ -8,7 +8,6 @@ import { Button } from "./ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -74,7 +73,7 @@ export default function CreateDrawer() {
           <DialogHeader>
             <DialogTitle>Create Timesheet</DialogTitle>
           </DialogHeader>
-          <ProfileForm setOpen={setOpen} />
+          <TimesheetForm setOpen={setOpen} />
         </DialogContent>
       </Dialog>
     );
@@ -89,7 +88,7 @@ export default function CreateDrawer() {
         <DrawerHeader className="text-left">
           <DrawerTitle>Create Timesheet</DrawerTitle>
         </DrawerHeader>
-        <ProfileForm setOpen={setOpen} />
+        <TimesheetForm setOpen={setOpen} />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
@@ -100,7 +99,7 @@ export default function CreateDrawer() {
   );
 }
 
-function ProfileForm({
+function TimesheetForm({
   setOpen,
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;

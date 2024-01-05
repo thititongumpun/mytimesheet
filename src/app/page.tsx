@@ -19,7 +19,6 @@ export default async function Home() {
   return (
     <div className="container mx-auto py-2">
       <div className="flex justify-end mb-2">
-        <CreateForm />
         <CreateDrawer />
       </div>
       <DataTable
