@@ -148,8 +148,7 @@ function TimesheetForm({
       description: `Create time sheet success`,
     });
 
-    const wait = () => new Promise((resolve) => setTimeout(resolve, 500));
-    wait().then(() => setOpen(false));
+    setOpen(false);
   }
 
   return (
