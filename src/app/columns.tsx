@@ -3,7 +3,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import type { Database } from "../lib/database.types";
 import { ArrowUpDown, MoreHorizontal, Check, X } from "lucide-react";
-// import { CheckCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,6 +16,7 @@ import { format } from "date-fns";
 import { th } from "date-fns/locale";
 import UpdateTimeSheet from "@/components/UpdateTimeSheet";
 import { Checkbox } from "@/components/ui/checkbox";
+import EditDrawer from "@/components/EditDrawer";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
@@ -60,10 +60,12 @@ export const columns: ColumnDef<
     },
     cell: ({ row }) => {
       return (
-        <div className="w-[80px] flex justify-center items-center">
-          {format(new Date(row.original.date_memo), "dd-MM-yyyy", {
-            locale: th,
-          })}
+        <div className="w-[120px] flex justify-center items-center font-bold">
+          <EditDrawer
+            name={format(new Date(row.original.date_memo), "dd-MM-yyyy", {
+              locale: th,
+            })}
+          />
         </div>
       );
     },

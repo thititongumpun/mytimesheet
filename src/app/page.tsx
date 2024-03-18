@@ -3,7 +3,6 @@ import { cookies } from "next/headers";
 import { DataTable } from "@/components/data-table";
 import { columns } from "./columns";
 import { Database } from "@/lib/database.types";
-import CreateForm from "@/components/CreateForm";
 import CreateDrawer from "@/components/CreateDrawer";
 
 export default async function Home() {

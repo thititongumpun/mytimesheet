@@ -16,14 +16,11 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "./ui/drawer";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/lib/database.types";
 import { useForm } from "react-hook-form";
