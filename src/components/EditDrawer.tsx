@@ -21,10 +21,14 @@ function EditDrawer({name}: Props) {
         <DrawerTrigger>{name}</DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
-            <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+            <DrawerTitle>Edit timesheet</DrawerTitle>
             <DrawerDescription>This action cannot be undone.</DrawerDescription>
           </DrawerHeader>
           <DrawerFooter>
+            <form action="" className="h-[180px]">
+              <input type="text" placeholder="Enter your name" />
+              <input type="password" placeholder="password" />
+            </form>
             <Button>Submit</Button>
             <DrawerClose>
               {/* <Button variant="outline">Cancel</Button> */}
