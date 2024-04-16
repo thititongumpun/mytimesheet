@@ -65,7 +65,8 @@ export const columns: ColumnDef<
             name={format(new Date(row.original.date_memo), "dd-MM-yyyy", {
               locale: th,
             })}
-            description={row.original.description}
+            data={row.original}
+            // description={row.original.description}
           />
         </div>
       );
