@@ -33,16 +33,16 @@ export default function Login() {
       password,
     });
 
-    toast({
-      title: "Sign in successful",
-    });
-
     if (res.error) {
       toast({
         title: res.error.message,
         variant: "destructive",
       });
     }
+
+    toast({
+      title: "Sign in successful",
+    });    
   };
 
   return (
