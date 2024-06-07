@@ -4,6 +4,7 @@ import React, { useTransition } from "react";
 import { DropdownMenuItem } from "./ui/dropdown-menu";
 import updateTimesheet from "../lib/supabase";
 import { useRouter } from "next/navigation";
+import { toast } from "./ui/use-toast";
 
 export default function UpdateTimeSheet({
   id,
@@ -17,8 +18,13 @@ export default function UpdateTimeSheet({
   return (
     <DropdownMenuItem
       onClick={() => {
-        startTransition(() =>
+        startTransition(() => {
           updateTimesheet(id, is_complete === true ? false : true)
+          toast({
+            title: `Timesheet ${id} updated`,
+            description: "Timesheet updated successfully",
+          });
+        }
         );
         startTransition(() => router.refresh());
       }}
