@@ -31,3 +31,23 @@ export async function createTimesheet(data: FormInputs) {
 
   return res;
 }
+
+export async function editTimesheet(id: number, data: FormInputs) {
+  const client = createServerActionClient<Database>({ cookies });
+
+  const { data: { user } } = await client.auth.getUser();
+  const today = new Date();
+  const currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  const date_memo = format(data.date_memo, `yyyy-MM-dd ${currentTime}`)
+
+  const res = await client.from("timesheets").update({
+    project_id: Number(data.project_id),
+    date_memo: date_memo,
+    is_complete: data.is_complete,
+    description: data.description,
+  }).eq("id", id)
+
+  revalidatePath('/')
+
+  return res;
+}

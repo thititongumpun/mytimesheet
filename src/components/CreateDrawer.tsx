@@ -101,9 +101,6 @@ function TimesheetForm({
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  console.log(new Date())
-  console.log(new Date().toLocaleString("en-US", {timeZone: "Asia/Bangkok"}));
-  console.log(new Date().toLocaleString("en-US", {timeZone: "America/New_York"}));
   const supabase = createClientComponentClient<Database>();
   const [projects, setProjects] =
     useState<Database["public"]["Tables"]["projects"]["Row"][]>();

@@ -5,6 +5,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
+import HardBreak from "@tiptap/extension-hard-break";
 
 export default function TipTab({
   description,
@@ -14,7 +15,22 @@ export default function TipTab({
   onChange: (richText: string) => void;
 }) {
   const editor = useEditor({
-    extensions: [Document, Paragraph, Text],
+    extensions: [
+      Document,
+      Paragraph.configure({
+        HTMLAttributes: {
+          class: 'min-h-[1rem]'
+        }
+      }),
+      Text,
+      HardBreak.extend({
+        addKeyboardShortcuts() {
+          return {
+            Enter: () => this.editor.commands.setHardBreak(),
+          };
+        },
+      }),
+    ],
     content: description,
     editorProps: {
       attributes: {
@@ -25,5 +41,7 @@ export default function TipTab({
       onChange(editor.getText());
     },
   });
+  editor?.commands.newlineInCode();
+
   return <EditorContent editor={editor} />;
 }

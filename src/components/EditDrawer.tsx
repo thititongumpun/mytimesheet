@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/form";
 import { FormSchema } from "@/lib/FormSchema";
 import { toast } from "./ui/use-toast";
-import { createTimesheet } from "@/app/actions";
+import { createTimesheet, editTimesheet } from "@/app/actions";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -35,6 +35,7 @@ import { Calendar } from "./ui/calendar";
 import SubmitBtn from "./SubmitBtn";
 import { Database } from "@/lib/database.types";
 import { Switch } from "./ui/switch";
+import { Input } from "./ui/input";
 
 type Props = {
   name: string;
@@ -42,32 +43,30 @@ type Props = {
 };
 
 function EditDrawer({ name, data }: Props) {
+  const id = data.id;
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       is_complete: data.is_complete as boolean,
       date_memo: new Date(data.date_memo),
       description: data.description,
+      project_id: data.project_id.toString(),
     },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    // const res = await createTimesheet(data);
-    // if (res.error) {
-    //   toast({
-    //     title: "Something went wrong",
-    //     description: res.error.message,
-    //   });
-    // }
+    const res = await editTimesheet(id, data);
+    if (res.error) {
+      toast({
+        title: "Something went wrong",
+        description: res.error.message,
+      });
+    }
 
     toast({
       title: "Successfully",
-      // description: `Create time sheet success`,
-      description: `${data}`,
+      description: `Update timesheet success`,
     });
-
-    // const wait = () => new Promise((resolve) => setTimeout(resolve, 500));
-    // wait().then(() => setOpen(false));
   }
 
   return (
@@ -120,6 +119,18 @@ function EditDrawer({ name, data }: Props) {
                         </PopoverContent>
                       </Popover>
                       <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="project_id"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                      <FormLabel className="text-base">Project Id</FormLabel>
+                      <FormControl>
+                        <Input {...field} value={field.value} />
+                      </FormControl>
                     </FormItem>
                   )}
                 />
